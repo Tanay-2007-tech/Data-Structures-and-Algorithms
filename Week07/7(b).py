@@ -1,59 +1,67 @@
-class QueueArray:
-    def __init__(self,size):
-        self.size=size
-        self.queue=[None]*size
-        self.front=-1
-        self.rear=-1
-    def enqueue(self,data):
-        if self.rear==self.size-1:
-            print("Queue Overflow")
+
+class Node:
+    def __init__(self ,data):
+        self.dat a =data
+        self.nex t =None
+class Queue:
+    def __init__(self):
+        self.fron t =None
+        self.rea r =None
+        self.siz e =0
+    def enqueue(self ,item):
+        new_nod e =Node(item)
+        if self.rear is None:
+            self.fron t =new_node
+            self.rea r =new_node
         else:
-            if self.front==-1:
-                self.front=0
-            self.rear+=1
-            self.queue[self.rear]=data
-            print(f"{data} is inserted into the queue")
+            self.rear.nex t =new_node
+            self.rea r =new_node
+
     def dequeue(self):
-        if self.front==-1 or self.front>self.rear:
-            print("Queue underflow")
+        if self.front and self.rear is None:
+            print("Queue Underflow")
         else:
-            x=self.queue[self.front]
-            self.queue[self.front]=None
-            self.front+=1
-            print(f"{x} is deleted from the queue")
-            if self.front>self.rear:
-                self.front=-1
-                self.rear=-1
+            if self.fron t= =self.rear:
+                self.fron t =None
+                self.rea r =None
+            else:
+                self.fron t =self.front.next
+            if self.front is None:
+                self.rea r =None
     def peek(self):
-        if self.front==-1:
-            print("Queue is empty")
+        if self.front is None:
+            print("Queue is Empty")
         else:
-            print(f"Peek: {self.queue[self.front]}")
+            print(f"Peek:{self.front.data}")
     def display(self):
-        if self.front==-1:
-            print("Queue is empty")
+        if self.front is None:
+            print("Queue is Empty")
         else:
-            for i in range(self.front,self.rear+1):
-                print(self.queue[i])
-size=int(input("Enter size"))
-Queue=QueueArray(size)
+            while self.front is not None:
+                print(self.front.data)
+                self.fron t =self.front.next
+
+q 1 =Queue()
 while True:
-    print("1. Enqueue")
-    print("2. Dequeue")
-    print("3. Peek")
-    print("4. Display")
-    print("5. Exit")
-    choice=int(input("Enter your choice"))
-    if choice==1:
-        data=int(input("Enter a value"))
-        Queue.enqueue(data)
-    elif choice==2:
-        Queue.dequeue()
-    elif choice==3:
-        Queue.peek()
-    elif choice==4:
-        Queue.display()
-    elif choice==5:
-        break
+    print("1.Enqueue")
+    print("2.Dequeue")
+    print("3.Peek")
+    print("4.Display")
+    print("5.Exit")
+
+    choic e =int(input("Enter Your Choice"))
+
+    if choic e= =1:
+        ite m =int(input("Enter value"))
+        q1.enqueue(item)
+    elif choic e= =2:
+        q1.dequeue()
+    elif choic e= =3:
+        q1.peek()
+    elif choic e= =4:
+        q1.display()
     else:
-        print("Invalid choice")
+        break
+
+
+
