@@ -1,67 +1,87 @@
-
 class Node:
-    def __init__(self ,data):
-        self.dat a =data
-        self.nex t =None
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
 class Queue:
     def __init__(self):
-        self.fron t =None
-        self.rea r =None
-        self.siz e =0
-    def enqueue(self ,item):
-        new_nod e =Node(item)
+        self.front = None
+        self.rear = None
+        self.size = 0
+
+    def enqueue(self, item):
+        new_node = Node(item)
+
         if self.rear is None:
-            self.fron t =new_node
-            self.rea r =new_node
+            self.front = new_node
+            self.rear = new_node
         else:
-            self.rear.nex t =new_node
-            self.rea r =new_node
+            self.rear.next = new_node
+            self.rear = new_node
+
+        self.size += 1
 
     def dequeue(self):
-        if self.front and self.rear is None:
+        if self.front is None:
             print("Queue Underflow")
         else:
-            if self.fron t= =self.rear:
-                self.fron t =None
-                self.rea r =None
+            data = self.front.data
+
+            if self.front == self.rear:
+                self.front = None
+                self.rear = None
             else:
-                self.fron t =self.front.next
-            if self.front is None:
-                self.rea r =None
+                self.front = self.front.next
+
+            self.size -= 1
+            print("Deleted:", data)
+
     def peek(self):
         if self.front is None:
             print("Queue is Empty")
         else:
-            print(f"Peek:{self.front.data}")
+            print("Peek:", self.front.data)
+
     def display(self):
         if self.front is None:
             print("Queue is Empty")
         else:
-            while self.front is not None:
-                print(self.front.data)
-                self.fron t =self.front.next
+            temp = self.front
 
-q 1 =Queue()
+            while temp is not None:
+                print(temp.data, end=" ")
+                temp = temp.next
+
+            print()
+
+
+q1 = Queue()
+
 while True:
-    print("1.Enqueue")
-    print("2.Dequeue")
-    print("3.Peek")
-    print("4.Display")
-    print("5.Exit")
+    print("\n1. Enqueue")
+    print("2. Dequeue")
+    print("3. Peek")
+    print("4. Display")
+    print("5. Exit")
 
-    choic e =int(input("Enter Your Choice"))
+    choice = int(input("Enter Your Choice: "))
 
-    if choic e= =1:
-        ite m =int(input("Enter value"))
+    if choice == 1:
+        item = int(input("Enter value: "))
         q1.enqueue(item)
-    elif choic e= =2:
+
+    elif choice == 2:
         q1.dequeue()
-    elif choic e= =3:
+
+    elif choice == 3:
         q1.peek()
-    elif choic e= =4:
+
+    elif choice == 4:
         q1.display()
-    else:
+
+    elif choice == 5:
         break
 
-
-
+    else:
+        print("Invalid Choice")
