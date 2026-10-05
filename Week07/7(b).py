@@ -1,66 +1,51 @@
-class Node:
-    def __init__(self, data):
-        self.data = data
-        self.next = None
-
-
-class CircularQueue:
-    def __init__(self):
-        self.front = None
-        self.rear = None
+class Queue:
+    def __init__(self, size):
+        self.size = size
+        self.queue = [None] * size
+        self.front = -1
+        self.rear = -1
 
     def enqueue(self, data):
-        new_node = Node(data)
+        if self.rear == self.size - 1:
+            print("Queue Overflow")
+            return
 
-        if self.front is None:
-            self.front = new_node
-            self.rear = new_node
-            new_node.next = self.front
-        else:
-            new_node.next = self.front
-            self.rear.next = new_node
-            self.rear = new_node
+        if self.front == -1:
+            self.front = 0
+
+        self.rear += 1
+        self.queue[self.rear] = data
 
     def dequeue(self):
-        if self.front is None:
-            print("Queue is Empty")
+        if self.front == -1 or self.front > self.rear:
+            print("Queue Underflow")
             return
 
-        data = self.front.data
-
-        if self.front == self.rear:
-            self.front = None
-            self.rear = None
-        else:
-            self.front = self.front.next
-            self.rear.next = self.front
-
+        data = self.queue[self.front]
+        self.front += 1
         print("Deleted:", data)
 
+        if self.front > self.rear:
+            self.front = -1
+            self.rear = -1
+
     def peek(self):
-        if self.front is None:
+        if self.front == -1:
             print("Queue is Empty")
         else:
-            print("Front:", self.front.data)
+            print("Front:", self.queue[self.front])
 
     def display(self):
-        if self.front is None:
+        if self.front == -1:
             print("Queue is Empty")
-            return
-
-        temp = self.front
-
-        while True:
-            print(temp.data, end=" ")
-            temp = temp.next
-
-            if temp == self.front:
-                break
-
-        print()
+        else:
+            for i in range(self.front, self.rear + 1):
+                print(self.queue[i], end=" ")
+            print()
 
 
-cq = CircularQueue()
+size = int(input("Enter size of queue: "))
+q = Queue(size)
 
 while True:
     print("\n1. Enqueue")
@@ -73,16 +58,16 @@ while True:
 
     if choice == 1:
         data = int(input("Enter value: "))
-        cq.enqueue(data)
+        q.enqueue(data)
 
     elif choice == 2:
-        cq.dequeue()
+        q.dequeue()
 
     elif choice == 3:
-        cq.peek()
+        q.peek()
 
     elif choice == 4:
-        cq.display()
+        q.display()
 
     elif choice == 5:
         break
