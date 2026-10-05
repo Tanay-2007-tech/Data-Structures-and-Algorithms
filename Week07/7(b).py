@@ -4,59 +4,63 @@ class Node:
         self.next = None
 
 
-class Queue:
+class CircularQueue:
     def __init__(self):
         self.front = None
         self.rear = None
-        self.size = 0
 
-    def enqueue(self, item):
-        new_node = Node(item)
+    def enqueue(self, data):
+        new_node = Node(data)
 
-        if self.rear is None:
+        if self.front is None:
             self.front = new_node
             self.rear = new_node
+            new_node.next = self.front
         else:
+            new_node.next = self.front
             self.rear.next = new_node
             self.rear = new_node
 
-        self.size += 1
-
     def dequeue(self):
         if self.front is None:
-            print("Queue Underflow")
+            print("Queue is Empty")
+            return
+
+        data = self.front.data
+
+        if self.front == self.rear:
+            self.front = None
+            self.rear = None
         else:
-            data = self.front.data
+            self.front = self.front.next
+            self.rear.next = self.front
 
-            if self.front == self.rear:
-                self.front = None
-                self.rear = None
-            else:
-                self.front = self.front.next
-
-            self.size -= 1
-            print("Deleted:", data)
+        print("Deleted:", data)
 
     def peek(self):
         if self.front is None:
             print("Queue is Empty")
         else:
-            print("Peek:", self.front.data)
+            print("Front:", self.front.data)
 
     def display(self):
         if self.front is None:
             print("Queue is Empty")
-        else:
-            temp = self.front
+            return
 
-            while temp is not None:
-                print(temp.data, end=" ")
-                temp = temp.next
+        temp = self.front
 
-            print()
+        while True:
+            print(temp.data, end=" ")
+            temp = temp.next
+
+            if temp == self.front:
+                break
+
+        print()
 
 
-q1 = Queue()
+cq = CircularQueue()
 
 while True:
     print("\n1. Enqueue")
@@ -68,17 +72,17 @@ while True:
     choice = int(input("Enter Your Choice: "))
 
     if choice == 1:
-        item = int(input("Enter value: "))
-        q1.enqueue(item)
+        data = int(input("Enter value: "))
+        cq.enqueue(data)
 
     elif choice == 2:
-        q1.dequeue()
+        cq.dequeue()
 
     elif choice == 3:
-        q1.peek()
+        cq.peek()
 
     elif choice == 4:
-        q1.display()
+        cq.display()
 
     elif choice == 5:
         break
